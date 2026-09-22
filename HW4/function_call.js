@@ -8,11 +8,11 @@ const tools = toolList.map(toOpenAITool);
 const TOOLS_BY_NAME = Object.fromEntries(toolList.map((tool) => [tool.name, tool]));
 const MAX_TOOL_ROUNDS = 8;
 
+// 作業 4 測試問題：可以隨時切換這幾種情境來驗證
 const history = [
   {
     role: "user",
-    content:
-      "現在幾點？我在台北車站附近，請問現在天氣如何？順便告訴我附近還有沒有 YouBike 可以租？",
+    content: "現在幾點？台北天氣好嗎？", // 測試同時呼叫時間與天氣工具
   },
 ];
 
@@ -23,6 +23,7 @@ for (let round = 1; round <= MAX_TOOL_ROUNDS; round += 1) {
 
   const response = await client.responses.create({
     model: DEFAULT_MODEL,
+    instructions: "你是一個聰明的助理，當使用者同時詢問多個不同面向的問題（例如時間與天氣）時，請務必同時呼叫對應的多個工具來取得資訊。",
     input: history,
     tools,
     tool_choice: "auto",
