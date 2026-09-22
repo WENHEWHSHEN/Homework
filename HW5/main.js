@@ -57,6 +57,16 @@ const pythonTeacher = new Agent({
   tools: [toAgentTool(pythonBookTool)],
 });
 
+// 新增的 Git 老師
+const gitTeacher = new Agent({
+  name: "Git 老師",
+  model: MODEL,
+  modelSettings: MODEL_SETTINGS,
+  instructions:
+    "你是 Git 老師，專門回答 Git 版本控制、分歧、合併衝突、commit、branch 等相關問題。請用繁體中文回答。",
+  handoffDescription: "Git 版本控制、程式碼分支、合併衝突或相關指令問題",
+});
+
 const homeroom = Agent.create({
   name: "班導師",
   model: MODEL,
@@ -71,7 +81,7 @@ const homeroom = Agent.create({
     toAgentTool(youbikeTool),
     toAgentTool(netflixTool),
   ],
-  handoffs: [phpTeacher, vueTeacher, pythonTeacher],
+  handoffs: [phpTeacher, vueTeacher, pythonTeacher, gitTeacher],
   mcpServers: [tenlongMcp],
 });
 
